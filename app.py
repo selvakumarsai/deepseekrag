@@ -1,4 +1,6 @@
 import streamlit as st
+import os
+import torch
 from langchain_community.document_loaders import PDFPlumberLoader
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -103,7 +105,8 @@ if uploaded_file is not None:
         document_variable_name="context",
         document_prompt=document_prompt,
         callbacks=None)
-
+    torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)] 
+    torch.classes.__path__ = []
     qa = RetrievalQA(
         combine_documents_chain=combine_documents_chain,
         verbose=True,
